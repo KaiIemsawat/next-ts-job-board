@@ -37,3 +37,4 @@ model Job {
 
 // Command line 'npx prisma db push' to push the schemat to db
 // 'npx prisma generate', to generate prisma client. Can also be used when making changes in schema
+// Use 'npx prisma studio' to access to database in prisma
