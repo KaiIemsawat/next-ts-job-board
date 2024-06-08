@@ -25,3 +25,5 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+
+//   use 'npm run seed' to seed dummie data to data base
