@@ -32,7 +32,7 @@ export default async function Home({
         <p className="text-muted-foreground">Find your dream jobs.</p>
       </div>
       <section className="flex flex-col gap-4 md:flex-row">
-        <JobFilterSidebar />
+        <JobFilterSidebar defaultValues={filterValues} />
         <JobResults filterValues={filterValues} />
       </section>
     </main>
