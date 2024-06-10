@@ -11,6 +11,7 @@ interface LocationInputProps
 const LocationInput = forwardRef<HTMLInputElement, LocationInputProps>(
   ({ onLocationSelected, ...props }, ref) => {
     const [locationSearchInput, setLocationSearchInput] = useState("");
+    const [isFocus, setIsFocus] = useState(false);
 
     const cities = useMemo(() => {
       if (!locationSearchInput.trim()) {
@@ -32,14 +33,29 @@ const LocationInput = forwardRef<HTMLInputElement, LocationInputProps>(
     }, [locationSearchInput]);
 
     return (
-      <>
+      <div className="relative">
         <Input
+          placeholder="Search for a city"
+          type="search"
           value={locationSearchInput}
           onChange={(e) => setLocationSearchInput(e.target.value)}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
           {...props}
           ref={ref}
         />
-      </>
+        {locationSearchInput.trim() &&
+          isFocus && ( // display only when focus
+            <div className="absolute z-20 divide-y rounded-b-lg border-x border-b bg-background shadow-xl">
+              {!cities.length && <p className="p-3">No results found</p>}
+              {cities.map((city) => (
+                <button key={city} className="block w-full p-2 text-start">
+                  {city}
+                </button>
+              ))}
+            </div>
+          )}
+      </div>
     );
   },
 );
