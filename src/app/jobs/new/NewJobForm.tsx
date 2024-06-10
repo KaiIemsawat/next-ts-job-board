@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import Select from "@/components/ui/select";
 import { jobTypes, locationTypes } from "@/lib/job-types";
 import LocationInput from "@/components/LocationInput";
+import { X } from "lucide-react";
 
 export const NewJobForm = () => {
   const form = useForm<CreateJobValues>({
@@ -165,6 +166,20 @@ export const NewJobForm = () => {
                       ref={field.ref}
                     />
                   </FormControl>
+                  {/* this will keep the selected location on screen */}
+                  {watch("location") && (
+                    <div className="flex items-center gap-1">
+                      <button // to delete the on-screen location
+                        type="button"
+                        onClick={() => {
+                          setValue("location", "", { shouldValidate: true });
+                        }}
+                      >
+                        <X size={20} />
+                      </button>
+                      <span className="text-sm">{watch("location")}</span>
+                    </div>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
