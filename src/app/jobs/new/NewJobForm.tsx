@@ -254,6 +254,28 @@ export const NewJobForm = () => {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={control}
+              name="salary"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Salary</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      //   To avoid user input 'e', '+', '-' in number input
+                      onKeyDown={(evt) =>
+                        ["e", "E", "+", "-"].includes(evt.key) &&
+                        evt.preventDefault()
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </form>
         </Form>
       </div>
