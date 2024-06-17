@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import RichTextEditor from "@/components/RichTextEditor";
 import { draftToMarkdown } from "markdown-draft-js";
 import LoadingButton from "@/components/LoadingButton";
+import { createJobPosting } from "./actions";
 
 export const NewJobForm = () => {
   const form = useForm<CreateJobValues>({
@@ -38,7 +39,6 @@ export const NewJobForm = () => {
   } = form;
 
   const onSubmit = async (values: CreateJobValues) => {
-    // alert(JSON.stringify(values, null, 2));
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
@@ -46,6 +46,12 @@ export const NewJobForm = () => {
         formData.append(key, value);
       }
     });
+
+    try {
+      await createJobPosting(formData);
+    } catch (error) {
+      alert("Something went wrong. Please, try again");
+    }
   };
 
   return (
@@ -132,7 +138,7 @@ export const NewJobForm = () => {
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files?.[0]; // select only the first file
+                        const file = e.target.files?.[0];
                         fieldValues.onChange(file);
                       }}
                     />
@@ -186,10 +192,9 @@ export const NewJobForm = () => {
                       ref={field.ref}
                     />
                   </FormControl>
-                  {/* this will keep the selected location on screen */}
                   {watch("location") && (
                     <div className="flex items-center gap-1">
-                      <button // to delete the on-screen location
+                      <button
                         type="button"
                         onClick={() => {
                           setValue("location", "", { shouldValidate: true });
@@ -207,7 +212,6 @@ export const NewJobForm = () => {
             <div className="space-y-2">
               <Label htmlFor="applicationEmail">How to apply</Label>
               <div className="flex justify-between">
-                {/* Email */}
                 <FormField
                   control={control}
                   name="applicationEmail"
@@ -281,15 +285,7 @@ export const NewJobForm = () => {
                 <FormItem>
                   <FormLabel>Salary</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      //   To avoid user input 'e', '+', '-' in number input
-                      onKeyDown={(evt) =>
-                        ["e", "E", "+", "-"].includes(evt.key) &&
-                        evt.preventDefault()
-                      }
-                    />
+                    <Input {...field} type="number" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

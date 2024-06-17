@@ -31,13 +31,14 @@ export async function createJobPosting(formData: FormData) {
 
   if (companyLogo) {
     const blob = await put(
-      `company_logo/${slug}${path.extname(companyLogo.name)}`,
+      `company_logos/${slug}${path.extname(companyLogo.name)}`,
       companyLogo,
       {
         access: "public",
         addRandomSuffix: false,
       },
     );
+
     companyLogoUrl = blob.url;
   }
 
