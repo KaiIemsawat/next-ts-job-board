@@ -8,8 +8,8 @@ interface LocationInputProps
   onLocationSelected: (loction: string) => void;
 }
 
-const LocationInput = forwardRef<HTMLInputElement, LocationInputProps>(
-  ({ onLocationSelected, ...props }, ref) => {
+export default forwardRef<HTMLInputElement, LocationInputProps>(
+  function LocationInput({ onLocationSelected, ...props }, ref) {
     const [locationSearchInput, setLocationSearchInput] = useState("");
     const [isFocus, setIsFocus] = useState(false);
 
@@ -67,4 +67,3 @@ const LocationInput = forwardRef<HTMLInputElement, LocationInputProps>(
     );
   },
 );
-export default LocationInput;
